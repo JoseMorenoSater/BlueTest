@@ -15,8 +15,10 @@ pipeline {
         stage('Create Important folder') {
           steps {
             timestamps() {
-              powershell 'mkdir Important'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'mkdir Important'
+              }
+
             }
 
           }
@@ -25,8 +27,10 @@ pipeline {
         stage('Create Backup folder') {
           steps {
             timestamps() {
-              powershell 'mkdir Backup'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'mkdir Backup'
+              }
+
             }
 
           }
@@ -40,8 +44,10 @@ pipeline {
         stage('Textfile Creation') {
           steps {
             timestamps() {
-              echo 'Textfile creation'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                echo 'Textfile creation'
+              }
+
             }
 
           }
@@ -50,8 +56,10 @@ pipeline {
         stage('Add Content') {
           steps {
             timestamps() {
-              powershell 'Set-Content file.txt \'Succesful Pipeline!, Check your logs on Elastic\''
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'Set-Content file.txt \'Succesful Pipeline!, Check your logs on Elastic\''
+              }
+
             }
 
           }
@@ -60,8 +68,10 @@ pipeline {
         stage('Move textfile') {
           steps {
             timestamps() {
-              powershell 'Move-Item file.txt Backup'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'Move-Item file.txt Backup'
+              }
+
             }
 
           }
@@ -75,8 +85,10 @@ pipeline {
         stage('Zip folder') {
           steps {
             timestamps() {
-              powershell 'tar -zcvf backup.gz Backup'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'tar -zcvf backup.gz Backup'
+              }
+
             }
 
           }
@@ -85,8 +97,10 @@ pipeline {
         stage('Delete folder') {
           steps {
             timestamps() {
-              powershell 'rm -r Backup'
-              logstashSend(maxLines: 1000, failBuild: true)
+              logstash() {
+                powershell 'rm -r Backup'
+              }
+
             }
 
           }
@@ -98,8 +112,10 @@ pipeline {
     stage('Move Zip') {
       steps {
         timestamps() {
-          powershell 'Move-Item backup.gz Important'
-          logstashSend(maxLines: 1000, failBuild: true)
+          logstash() {
+            powershell 'Move-Item backup.gz Important'
+          }
+
         }
 
       }
