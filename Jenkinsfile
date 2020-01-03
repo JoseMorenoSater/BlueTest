@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Folder Managemen') {
+    stage('Folder Management') {
       parallel {
         stage('Folders Creation') {
           steps {
