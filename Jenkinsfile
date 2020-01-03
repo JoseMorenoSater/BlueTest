@@ -9,6 +9,7 @@ pipeline {
               echo 'Folder Creation'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -18,6 +19,7 @@ pipeline {
               powershell 'mkdir Important'
             }
 
+            logstashSend(failBuild: true, maxLines: 1)
           }
         }
 
@@ -27,6 +29,7 @@ pipeline {
               powershell 'mkdir Backup'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -41,6 +44,7 @@ pipeline {
               echo 'Textfile creation'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -50,6 +54,7 @@ pipeline {
               powershell 'Set-Content file.txt \'Succesful Pipeline!, Check your logs on Elastic\''
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -59,6 +64,7 @@ pipeline {
               powershell 'Move-Item file.txt Backup'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -73,6 +79,7 @@ pipeline {
               powershell 'tar -zcvf backup.gz Backup'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -82,6 +89,7 @@ pipeline {
               powershell 'rm -r Backup'
             }
 
+            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -94,6 +102,7 @@ pipeline {
           powershell 'Move-Item backup.gz Important'
         }
 
+        logstashSend(maxLines: 1, failBuild: true)
       }
     }
 
