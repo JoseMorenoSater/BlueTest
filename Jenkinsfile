@@ -15,8 +15,8 @@ pipeline {
         stage('Create Important folder') {
           steps {
             timestamps() {
-              logstashSend(maxLines: 1, failBuild: true)
               powershell 'mkdir Important'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
           }
@@ -26,9 +26,9 @@ pipeline {
           steps {
             timestamps() {
               powershell 'mkdir Backup'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -41,9 +41,9 @@ pipeline {
           steps {
             timestamps() {
               echo 'Textfile creation'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -51,9 +51,9 @@ pipeline {
           steps {
             timestamps() {
               powershell 'Set-Content file.txt \'Succesful Pipeline!, Check your logs on Elastic\''
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -61,9 +61,9 @@ pipeline {
           steps {
             timestamps() {
               powershell 'Move-Item file.txt Backup'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -76,9 +76,9 @@ pipeline {
           steps {
             timestamps() {
               powershell 'tar -zcvf backup.gz Backup'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -86,9 +86,9 @@ pipeline {
           steps {
             timestamps() {
               powershell 'rm -r Backup'
+              logstashSend(maxLines: 1, failBuild: true)
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
@@ -99,9 +99,9 @@ pipeline {
       steps {
         timestamps() {
           powershell 'Move-Item backup.gz Important'
+          logstashSend(maxLines: 1, failBuild: true)
         }
 
-        logstashSend(maxLines: 1, failBuild: true)
       }
     }
 
