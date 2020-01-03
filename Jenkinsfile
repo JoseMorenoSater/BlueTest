@@ -9,17 +9,16 @@ pipeline {
               echo 'Folder Creation'
             }
 
-            logstashSend(maxLines: 1, failBuild: true)
           }
         }
 
         stage('Create Important folder') {
           steps {
             timestamps() {
+              logstashSend(maxLines: 1, failBuild: true)
               powershell 'mkdir Important'
             }
 
-            logstashSend(failBuild: true, maxLines: 1)
           }
         }
 
